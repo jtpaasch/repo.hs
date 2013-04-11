@@ -1,0 +1,52 @@
+if [ -n "${VIRTHUALENV}" ]; then
+    if [ "/home/jt/code/repo" = "${VIRTHUALENV}" ]; then
+        echo "${VIRTHUALENV_NAME} Virtual Haskell Environment is already active."
+    else
+        echo "There is already ${VIRTHUALENV_NAME} Virtual Haskell Environment activated."
+        echo "Deactivate it first (using command 'deactivate'), to activate"
+        echo "repo environment."
+    fi
+    return 1
+fi
+
+export VIRTHUALENV="/home/jt/code/repo"
+export VIRTHUALENV_NAME="repo"
+
+echo "Activating ${VIRTHUALENV_NAME} Virtual Haskell Environment (at ${VIRTHUALENV})."
+echo ""
+echo "Use regular Haskell tools (ghc, ghci, ghc-pkg, cabal) to manage your Haskell environment."
+echo ""
+echo "To exit from this virtual environment, enter command 'deactivate'."
+
+export "VIRTHUALENV_PATH_BACKUP"="${PATH}"
+export "VIRTHUALENV_PS1_BACKUP"="${PS1}"
+
+deactivate() {
+    echo "Deactivating ${VIRTHUALENV_NAME} Virtual Haskell Environment (at ${VIRTHUALENV})."
+    echo "Restoring previous environment settings."
+
+    export "PATH"="${VIRTHUALENV_PATH_BACKUP}"
+    unset -v "VIRTHUALENV_PATH_BACKUP"
+    export "PS1"="${VIRTHUALENV_PS1_BACKUP}"
+    unset -v "VIRTHUALENV_PS1_BACKUP"
+
+    unset -v VIRTHUALENV
+    unset -v VIRTHUALENV_NAME
+    unset -v GHC_PACKAGE_PATH
+    unset -f deactivate
+
+    if [ -n "$BASH" -o -n "$ZSH_VERSION" ]; then
+        hash -r
+    fi
+}
+
+PATH_PREPENDIX="$(cat /home/jt/code/repo/.virthualenv/path_var_prependix)"
+export PATH="${PATH_PREPENDIX}:${PATH}"
+unset -v PATH_PREPENDIX
+
+export GHC_PACKAGE_PATH="$(cat /home/jt/code/repo/.virthualenv/ghc_package_path_var)"
+export PS1="(${VIRTHUALENV_NAME})${PS1}"
+
+if [ -n "$BASH" -o -n "$ZSH_VERSION" ]; then
+    hash -r
+fi

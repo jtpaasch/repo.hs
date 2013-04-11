@@ -1,0 +1,25 @@
+#!/bin/sh
+
+PATH_ELEMS="$(echo ${PATH} | tr -s ':' '\n')"
+
+ORIG_CABAL_BINARY=""
+
+for PATH_ELEM in ${PATH_ELEMS}; do
+    CABAL_CANDIDATE="${PATH_ELEM}/cabal"
+    if command -v "${CABAL_CANDIDATE}" > /dev/null 2> /dev/null; then
+        if [ "${0}" != "${CABAL_CANDIDATE}" ]; then
+            if [ -z "${ORIG_CABAL_BINARY}" ]; then
+                ORIG_CABAL_BINARY="${CABAL_CANDIDATE}"
+            fi
+        fi
+    fi
+done
+
+if [ -z "${ORIG_CABAL_BINARY}" ]; then
+    echo "cabal wrapper: Couldn't find real cabal program"
+    exit 1
+fi
+
+CABAL_CONFIG="/home/jt/code/repo/.virthualenv/cabal/config"
+
+exec "${ORIG_CABAL_BINARY}" --config-file="${CABAL_CONFIG}" "${@}"
