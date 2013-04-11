@@ -25,7 +25,7 @@ You can then install it for use system wide with:
 Usage
 -----
 
-The important thing is to read the source code (for learning purposes). This is not meant for practical use! But, the commands go like this:
+The important thing is to read the source code (for learning purposes). This is not meant for practical use! But, the commands go as follows.
 
 To create a new repository in a directory, cd into that directory, then do this:
 
@@ -69,4 +69,5 @@ Caveats
 Again, this is for educational purposes. So, note these caveats:
 
 * `repo` only does fast forward merges. It cannot merge anything more complex, and will ask you to do it manually in such cases.
-* `repo` does not distribute across many directories or computers. It only works locally, in one folder. Maybe someday I'll build a distrubited version, but for now, this is just meant to illustrate how git works locally. 
+* `repo` does not distribute across many directories or computers. It only works locally, in one folder. Maybe someday I'll build a distributed version, but for now, this is just meant to illustrate how git works locally. 
+* `repo` has bugs!
