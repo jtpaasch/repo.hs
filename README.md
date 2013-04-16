@@ -1,7 +1,7 @@
 Repo.hs
 =======
 
-A very simple implementation of git, written in haskell. I wrote this for a presentation on how git works. It is for educational purposes -- it is meant to show how _git_ works, not how _haskell_ works. 
+A very simple implementation of git, written in haskell. I wrote this for a presentation on how git works. It is for educational purposes -- it is meant to show how _git_ works, not how _haskell_ works (real haskellers will likely gasp in horror at the haskell here). 
 
 I chose to write this in haskell simply because the presentation's audience was diverse, and when written in a certain way, haskell can be very readable for people who may or may not have any expertise in writing much code. 
 
